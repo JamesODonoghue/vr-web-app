@@ -4483,8 +4483,9 @@ ${i.join(`
             .main {
                 display: flex;
             }
-        `}connectedCallback(){super.connectedCallback(),this.init()}async init(){if(!navigator.xr||!await navigator.xr.isSessionSupported("immersive-vr"))return;const e=await navigator.xr.requestSession("immersive-vr");this.handleSessionStarted(e)}async handleSessionStarted(s){const t=document.createElement("canvas").getContext("webgl",{xrCompatible:!0});if(!t)return;s.updateRenderState({baseLayer:new XRWebGLLayer(s,t)});const n=await s.requestReferenceSpace("local"),i=s.requestAnimationFrame((r,a)=>this.handleXRFrame(r,a,n,t));console.log(i)}handleXRFrame(s,e,t,n){const i=e.session;if(i.requestAnimationFrame((o,l)=>this.handleXRFrame(o,l,t,n)),!e.getViewerPose(t))return;const a=i.renderState.baseLayer;a||(n.bindFramebuffer(n.FRAMEBUFFER,a.framebuffer),n.clearColor(Math.cos(s/2e3),Math.cos(s/4e3),Math.cos(s/6e3),1),n.clear(n.COLOR_BUFFER_BIT|n.DEPTH_BUFFER_BIT))}render(){return rv`
+        `}connectedCallback(){super.connectedCallback(),this.init()}async init(){!navigator.xr||await navigator.xr.isSessionSupported("immersive-vr")}async handleSessionStarted(s){const t=document.createElement("canvas").getContext("webgl",{xrCompatible:!0});if(!t)return;s.updateRenderState({baseLayer:new XRWebGLLayer(s,t)});const n=await s.requestReferenceSpace("local"),i=s.requestAnimationFrame((r,a)=>this.handleXRFrame(r,a,n,t));console.log(i)}handleXRFrame(s,e,t,n){const i=e.session;if(i.requestAnimationFrame((o,l)=>this.handleXRFrame(o,l,t,n)),!e.getViewerPose(t))return;const a=i.renderState.baseLayer;a||(n.bindFramebuffer(n.FRAMEBUFFER,a.framebuffer),n.clearColor(Math.cos(s/2e3),Math.cos(s/4e3),Math.cos(s/6e3),1),n.clear(n.COLOR_BUFFER_BIT|n.DEPTH_BUFFER_BIT))}async handleClick(){if(!navigator.xr)return;const s=await navigator.xr.requestSession("immersive-vr");this.handleSessionStarted(s)}render(){return rv`
             <h1>This is a test</h1>
+            <button @click="${this.handleClick}">enter the matrix</button>
             <div class="main">
                 <!-- <div class="main__left">
                     <h1>Rocket 3</h1>
