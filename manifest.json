@@ -1,16 +1,7 @@
 {
   "index.html": {
-    "file": "assets/main.895d4bac.js",
+    "file": "assets/main.f0a99371.js",
     "src": "index.html",
-    "isEntry": true,
-    "imports": [
-      "_vendor.16442617.js"
-    ],
-    "assets": [
-      "assets/rocket.86cef859.glb"
-    ]
-  },
-  "_vendor.16442617.js": {
-    "file": "assets/vendor.16442617.js"
+    "isEntry": true
   }
 }
