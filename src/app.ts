@@ -31,8 +31,6 @@ export class VrApp extends LitElement {
         if (!result) {
             return;
         }
-        const session = await navigator.xr.requestSession("immersive-vr");
-        this.handleSessionStarted(session);
     }
 
     async handleSessionStarted(session: XRSession) {
@@ -127,9 +125,18 @@ export class VrApp extends LitElement {
           }*/
     }
 
+    async handleClick() {
+        if (!navigator.xr) {
+            return;
+        }
+        const session = await navigator.xr.requestSession("immersive-vr");
+        this.handleSessionStarted(session);
+    }
+
     render() {
         return html`
             <h1>This is a test</h1>
+            <button @click="${this.handleClick}">enter the matrix</button>
             <div class="main">
                 <!-- <div class="main__left">
                     <h1>Rocket 3</h1>
