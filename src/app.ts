@@ -1,5 +1,5 @@
 import { LitElement, html, customElement, css } from "lit-element";
-import rocketUrl from "./assets/models/rocket.glb?url";
+// import rocketUrl from "./assets/models/rocket.glb?url";
 import "@google/model-viewer";
 /**
  * An example element.
