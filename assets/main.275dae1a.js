@@ -4488,8 +4488,8 @@ ${i.join(`
                 text-align: center;
             }
             h1 {
-                font-size: 16rem;
-                letter-spacing: -0.5rem;
+                font-size: 16vw;
+                letter-spacing: -0.5vw;
             }
         `}connectedCallback(){super.connectedCallback(),this.init()}async init(){if(!navigator.xr||!await navigator.xr.isSessionSupported("immersive-vr"))return;const e=await navigator.xr.requestSession("immersive-vr");this.handleSessionStarted(e)}async handleSessionStarted(s){const t=document.createElement("canvas").getContext("webgl",{xrCompatible:!0});if(!t)return;await s.updateRenderState({baseLayer:new XRWebGLLayer(s,t)});const n=await s.requestReferenceSpace("local"),i=s.requestAnimationFrame((r,a)=>this.handleXRFrame(r,a,n,t));console.log(i)}handleXRFrame(s,e,t,n){const i=e.session;if(i.requestAnimationFrame((o,l)=>this.handleXRFrame(o,l,t,n)),!e.getViewerPose(t))return;const a=i.renderState.baseLayer;!a||(n.bindFramebuffer(n.FRAMEBUFFER,a.framebuffer),n.clearColor(Math.cos(s/2e3),Math.cos(s/4e3),Math.cos(s/6e3),1),n.clear(n.COLOR_BUFFER_BIT|n.DEPTH_BUFFER_BIT))}render(){return rv`
             <div class="main">
