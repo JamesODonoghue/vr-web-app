@@ -1,5 +1,5 @@
 import { LitElement, html, customElement, css } from "lit-element";
-// import rocketUrl from "./assets/models/rocket.glb?url";
+import rocketUrl from "./assets/models/rocket.glb?url";
 import "@google/model-viewer";
 /**
  * An example element.
@@ -14,8 +14,20 @@ export class VrApp extends LitElement {
             .main {
                 display: flex;
             }
+            .main__left {
+                width: 100%;
+                text-align: center;
+            }
+            h1 {
+                font-size: 16rem;
+                letter-spacing: -0.5rem;
+            }
         `;
     }
+
+    // protected createRenderRoot(): Element | ShadowRoot {
+    //     return this;
+    // }
 
     connectedCallback(): void {
         super.connectedCallback();
@@ -31,6 +43,9 @@ export class VrApp extends LitElement {
         if (!result) {
             return;
         }
+
+        const session = await navigator.xr.requestSession("immersive-vr");
+        this.handleSessionStarted(session);
     }
 
     async handleSessionStarted(session: XRSession) {
@@ -46,12 +61,13 @@ export class VrApp extends LitElement {
         // Use the new WebGL context to create a XRWebGLLayer and set it as the
         // sessions baseLayer. This allows any content rendered to the layer to
         // be displayed on the XRDevice.
-        session.updateRenderState({ baseLayer: new XRWebGLLayer(session, gl) });
+        await session.updateRenderState({
+            baseLayer: new XRWebGLLayer(session, gl),
+        });
 
         // Get a reference space, which is required for querying poses. In this
         // case an 'local' reference space means that all poses will be relative
         // to the location where the XRDevice was first detected.
-
         const xrRefSpace = await session.requestReferenceSpace("local");
 
         // Inform the session that we're ready to begin drawing.
@@ -89,15 +105,14 @@ export class VrApp extends LitElement {
         }
 
         const glLayer = session.renderState.baseLayer;
-
-        if (glLayer) {
+        if (!glLayer) {
             return;
         }
 
         // If we do have a valid pose, bind the WebGL layer's framebuffer,
         // which is where any content to be displayed on the XRDevice must be
         // rendered.
-        gl.bindFramebuffer(gl.FRAMEBUFFER, glLayer!.framebuffer);
+        gl.bindFramebuffer(gl.FRAMEBUFFER, glLayer.framebuffer);
 
         // Update the clear color so that we can observe the color in the
         // headset changing over time.
@@ -125,23 +140,40 @@ export class VrApp extends LitElement {
           }*/
     }
 
-    async handleClick() {
-        if (!navigator.xr) {
-            return;
-        }
-        const session = await navigator.xr.requestSession("immersive-vr");
-        this.handleSessionStarted(session);
-    }
-
     render() {
         return html`
-            <h1>This is a test</h1>
-            <button @click="${this.handleClick}">enter the matrix</button>
             <div class="main">
-                <!-- <div class="main__left">
+                <div class="main__right">
+                    <model-viewer
+                        style="height: 100%; width: 100%; position:absolute"
+                        bounds="tight"
+                        src=${rocketUrl}
+                        ar
+                        ar-modes="webxr scene-viewer quick-look"
+                        camera-controls
+                        environment-image="neutral"
+                        shadow-intensity="1"
+                    >
+                        <div class="progress-bar hide" slot="progress-bar">
+                            <div class="update-bar"></div>
+                        </div>
+                        <button
+                            slot="ar-button"
+                            id="ar-button"
+                            style="position: absolute; bottom: 2rem; right: 2rem"
+                        >
+                            View in your space
+                        </button>
+                        <div id="ar-prompt">
+                            <img
+                                src="https://modelviewer.dev/shared-assets/icons/hand.png"
+                            />
+                        </div>
+                    </model-viewer>
+                </div>
+                <div class="main__left">
                     <h1>Rocket 3</h1>
-                </div> -->
-                <div class="main__right"></div>
+                </div>
             </div>
         `;
     }
