@@ -19,8 +19,8 @@ export class VrApp extends LitElement {
                 text-align: center;
             }
             h1 {
-                font-size: 16rem;
-                letter-spacing: -0.5rem;
+                font-size: 16vw;
+                letter-spacing: -0.5vw;
             }
         `;
     }
