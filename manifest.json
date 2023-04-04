@@ -1,7 +1,14 @@
 {
+  "src/assets/models/rocket.glb": {
+    "file": "assets/rocket.86cef859.glb",
+    "src": "src/assets/models/rocket.glb"
+  },
   "index.html": {
-    "file": "assets/main.462bf813.js",
+    "file": "assets/main.5521e7fc.js",
     "src": "index.html",
-    "isEntry": true
+    "isEntry": true,
+    "assets": [
+      "assets/rocket.86cef859.glb"
+    ]
   }
 }
